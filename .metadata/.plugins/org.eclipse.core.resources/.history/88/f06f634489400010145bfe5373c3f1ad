@@ -1,0 +1,75 @@
+package com.sinse.exceltable;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+public class ExcelHomework extends JFrame{
+	JPanel p_north;
+	JButton bt_load;
+	JButton bt_set;
+	JTable table;
+	JScrollPane scroll;
+	
+	public ExcelHomework() {
+		// 버튼영역
+		p_north = new JPanel();
+		bt_load = new JButton("Load");
+		bt_set = new JButton("Set");
+		p_north.setPreferredSize(new Dimension(650, 50));
+		p_north.setBackground(Color.yellow);
+		
+		// 이벤트
+		bt_load.addActionListener(new ActionListener() {
+			// 파일 로드버튼
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		bt_set.addActionListener(new ActionListener() {
+			// 파일찾기 버튼
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		p_north.add(bt_load);
+		p_north.add(bt_set);
+		add(p_north,BorderLayout.NORTH);
+		
+		// 테이블 영역
+		table = new JTable();
+		scroll = new JScrollPane(table);
+		add(scroll);
+		
+		
+		setSize(650, 600);
+		setVisible(true);
+		
+	}
+	
+	// DB연결
+	public void connect() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		new ExcelHomework();
+	}
+
+}

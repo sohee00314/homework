@@ -1,0 +1,36 @@
+package com.sinse.exceltable;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+public class ExcelHomework extends JFrame{
+	JPanel p_north;
+	JButton bt_loadl;
+	JButton bt_set;
+	JPanel p_center;
+	JTable table;
+	JScrollPane scroll;
+	
+	public ExcelHomework() {
+		p_north = new JPanel();
+		p_north.setPreferredSize(new Dimension(650, 50));
+		p_north.setBackground(Color.yellow);
+		add(p_north,BorderLayout.NORTH);
+		
+		
+		setSize(650, 600);
+		setVisible(true);
+		
+	}
+	public static void main(String[] args) {
+		new ExcelHomework();
+	}
+
+}

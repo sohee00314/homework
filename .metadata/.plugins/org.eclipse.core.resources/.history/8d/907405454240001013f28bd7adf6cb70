@@ -1,0 +1,15 @@
+package com.sinse.exceltable;
+
+import javax.swing.JFrame;
+
+public class ExcelHomework extends JFrame{
+	
+	public ExcelHomework() {
+		setSize(650, 600);
+		setVisible(true);
+	}
+	public static void main(String[] args) {
+		new ExcelHomework();
+	}
+
+}
