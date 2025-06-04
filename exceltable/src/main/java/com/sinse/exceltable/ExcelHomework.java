@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -71,9 +73,39 @@ public class ExcelHomework extends JFrame{
 			}
 		});
 		bt_set.addActionListener(new ActionListener() {
-			// DB 로드 버튼
+			// DB에 insert 버튼
+			PreparedStatement pstmt;
 			@Override
 			public void actionPerformed(ActionEvent e) {
+					
+				
+				String sql = "insert into userexcel(id,pwd,name,email) values(?,?,?,?)";
+				try {
+					pstmt = con.prepareStatement(sql);
+					for(int i=0; i<model.data.size(); i++) {
+						List<String>row = model.data.get(i);
+						if(row !=null && row.size()>=4) {
+							for(int a =0;a<4; a++) {
+								pstmt.setString(a+1,row.get(a));
+							}
+							pstmt.executeUpdate();
+							
+						}
+					}
+					JOptionPane.showMessageDialog(bt_set,"데이터베이스에 추가 성공");
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}finally {
+					if(pstmt !=null) {
+						try {
+							pstmt.close();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				}
 				
 			}
 		});
@@ -139,7 +171,7 @@ public class ExcelHomework extends JFrame{
 					
 					XSSFSheet sheet = workbook.getSheetAt(0); // 첫번쨰 시트로 연결
 					XSSFRow row = sheet.getRow(0);
-					DataModel model = new DataModel();
+					this.model = new DataModel();
 					
 					model.title = new ArrayList<>();
 					
