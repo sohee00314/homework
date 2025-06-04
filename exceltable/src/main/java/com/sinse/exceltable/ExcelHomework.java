@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -22,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -135,7 +138,31 @@ public class ExcelHomework extends JFrame{
 					XSSFWorkbook workbook = new XSSFWorkbook(file); 
 					
 					XSSFSheet sheet = workbook.getSheetAt(0); // 첫번쨰 시트로 연결
-					XSSFRow row = sheet.getRow(0); // 첫번째 row접근
+					XSSFRow row = sheet.getRow(0);
+					DataModel model = new DataModel();
+					
+					model.title = new ArrayList<>();
+					
+					// 타이틀내용 담기
+					for(int i=0;i<row.getLastCellNum();i++) {
+						XSSFCell c = row.getCell(i);
+						model.title.add(c.getStringCellValue());
+					}
+					
+					for(int i=sheet.getFirstRowNum()+1;i<=sheet.getLastRowNum();i++) {
+						XSSFRow r= sheet.getRow(i);
+						List<String> datarow = new ArrayList<String>();
+						if(r !=null) {
+							for(int j =0; j<r.getLastCellNum();j++) {
+								XSSFCell cell = r.getCell(j);
+								datarow.add(cell.getStringCellValue());
+							}
+						}
+						model.data.put(i-1, datarow);
+						
+					}
+					table.setModel(model);
+					table.updateUI();
 					
 				} catch (InvalidFormatException e) {
 					// TODO Auto-generated catch block
