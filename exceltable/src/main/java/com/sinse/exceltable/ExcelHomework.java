@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
@@ -33,6 +34,8 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import jdk.internal.classfile.impl.Options.Key;
+
 public class ExcelHomework extends JFrame{
 	JPanel p_north;
 	JButton bt_load;
@@ -60,6 +63,8 @@ public class ExcelHomework extends JFrame{
 		p_north.setPreferredSize(new Dimension(650, 50));
 		p_north.setBackground(Color.yellow);
 		
+		
+		
 		chooser = new JFileChooser();
 		
 		// 이벤트
@@ -80,12 +85,12 @@ public class ExcelHomework extends JFrame{
 			// DB에 insert 버튼
 			PreparedStatement pstmt;
 			@Override
-			public void actionPerformed(ActionEvent e) {
-					
+			public void actionPerformed(ActionEvent e) {	
 				
-				String sql = "insert into userexcel(id,pwd,name,email) values(?,?,?,?)";
+				StringBuffer sql = new StringBuffer();
+				sql.append("insert into userexcel(id,pwd,name,email) values(?,?,?,?)");
 				try {
-					pstmt = con.prepareStatement(sql);
+					pstmt = con.prepareStatement(sql.toString());
 					for(int i=0; i<model.data.size(); i++) {
 						List<String>row = model.data.get(i);
 						if(row !=null && row.size()>=4) {
@@ -147,9 +152,7 @@ public class ExcelHomework extends JFrame{
 				}
 			}
 		});
-		
-		// cell 한개만 수정하고 업데이트
-		
+			
 		
 		this.addWindowListener(new WindowAdapter() {
 		// 창 닫으면 DB연결 해제
@@ -245,6 +248,53 @@ public class ExcelHomework extends JFrame{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				
+				// cell 한개만 수정하고 업데이트
+				
+				table.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						if(e.getKeyCode()== KeyEvent.VK_ENTER) {
+							
+							e.consume();
+							
+							int row = table.getSelectedRow();
+							int col = table.getSelectedColumn();
+							
+							System.out.println(row);
+							
+							PreparedStatement pstmt = null;
+							StringBuffer sql = new StringBuffer();
+							sql.append("UPDATE userexcel SET pwd=?, name=?, email=? WHERE id=?");
+							try {
+								pstmt = con.prepareStatement(sql.toString());
+								for(int i=0; i<4; i++) {
+									pstmt.setString(i+1,table.getValueAt(row,i).toString());
+								}
+								pstmt.setString(4, table.getValueAt(row, 0).toString());
+								int result = pstmt.executeUpdate();
+								if(result !=0) {
+									System.out.println("업데이트 성공");
+								}else {
+									System.out.println("업데이트 실패");
+								}
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							finally {
+								try {
+									pstmt.close();
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+							
+						}
+					}
+				});	
 		
 		
 	}
