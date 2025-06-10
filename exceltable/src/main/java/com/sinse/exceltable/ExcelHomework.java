@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -31,10 +34,13 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import jdk.internal.classfile.impl.Options.Key;
+
 public class ExcelHomework extends JFrame{
 	JPanel p_north;
 	JButton bt_load;
 	JButton bt_set;
+	JButton bt_del;
 	JTable table;
 	JScrollPane scroll;
 	
@@ -51,10 +57,13 @@ public class ExcelHomework extends JFrame{
 	public ExcelHomework() {
 		// 버튼영역
 		p_north = new JPanel();
-		bt_load = new JButton("Load");
-		bt_set = new JButton("Set");
+		bt_load = new JButton("파일찾기");
+		bt_set = new JButton("DB로 보내기");
+		bt_del = new JButton("모든 데이터 삭제");
 		p_north.setPreferredSize(new Dimension(650, 50));
 		p_north.setBackground(Color.yellow);
+		
+		
 		
 		chooser = new JFileChooser();
 		
@@ -76,12 +85,12 @@ public class ExcelHomework extends JFrame{
 			// DB에 insert 버튼
 			PreparedStatement pstmt;
 			@Override
-			public void actionPerformed(ActionEvent e) {
-					
+			public void actionPerformed(ActionEvent e) {	
 				
-				String sql = "insert into userexcel(id,pwd,name,email) values(?,?,?,?)";
+				StringBuffer sql = new StringBuffer();
+				sql.append("insert into userexcel(id,pwd,name,email) values(?,?,?,?)");
 				try {
-					pstmt = con.prepareStatement(sql);
+					pstmt = con.prepareStatement(sql.toString());
 					for(int i=0; i<model.data.size(); i++) {
 						List<String>row = model.data.get(i);
 						if(row !=null && row.size()>=4) {
@@ -110,6 +119,41 @@ public class ExcelHomework extends JFrame{
 			}
 		});
 		
+		bt_del.addActionListener(new ActionListener() {
+			// 테이터베이스 table 내용 삭제
+			public void actionPerformed(ActionEvent e) {
+				String sql = "TRUNCATE TABLE userexcel";
+				PreparedStatement pstmt = null;
+				try {
+					
+					int result = JOptionPane.showConfirmDialog(
+						   bt_del,
+						    "정말 전체를 삭제하시겠습니까?",
+						    "삭제 확인",
+						    JOptionPane.YES_NO_OPTION,
+						    JOptionPane.INFORMATION_MESSAGE
+						);
+
+						if (result == JOptionPane.YES_OPTION) {
+							pstmt = con.prepareStatement(sql);
+							pstmt.executeUpdate();
+						}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				finally {
+					try {
+						pstmt.close();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+			
+		
 		this.addWindowListener(new WindowAdapter() {
 		// 창 닫으면 DB연결 해제
 		public void windowClosing(WindowEvent e) {
@@ -127,6 +171,7 @@ public class ExcelHomework extends JFrame{
 		
 		p_north.add(bt_load);
 		p_north.add(bt_set);
+		p_north.add(bt_del);
 		add(p_north,BorderLayout.NORTH);
 		
 		// 테이블 영역
@@ -203,6 +248,53 @@ public class ExcelHomework extends JFrame{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				
+				// cell 한개만 수정하고 업데이트
+				
+				table.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						if(e.getKeyCode()== KeyEvent.VK_ENTER) {
+							
+							e.consume();
+							
+							int row = table.getSelectedRow();
+							int col = table.getSelectedColumn();
+							
+							System.out.println(row);
+							
+							PreparedStatement pstmt = null;
+							StringBuffer sql = new StringBuffer();
+							sql.append("UPDATE userexcel SET pwd=?, name=?, email=? WHERE id=?");
+							try {
+								pstmt = con.prepareStatement(sql.toString());
+								for(int i=0; i<4; i++) {
+									pstmt.setString(i+1,table.getValueAt(row,i).toString());
+								}
+								pstmt.setString(4, table.getValueAt(row, 0).toString());
+								int result = pstmt.executeUpdate();
+								if(result !=0) {
+									System.out.println("업데이트 성공");
+								}else {
+									System.out.println("업데이트 실패");
+								}
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							finally {
+								try {
+									pstmt.close();
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+							
+						}
+					}
+				});	
 		
 		
 	}

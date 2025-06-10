@@ -28,11 +28,24 @@ public class DataModel extends AbstractTableModel{
 		return title.get(column);
 	}
 
-
 	@Override
 	public Object getValueAt(int rowIndex, int colIndex) {
 		List row = data.get(rowIndex);
 		return row.get(colIndex);
 	}
+	
+	// ID와 비밀번호는 수정불가
+	@Override
+	public boolean isCellEditable(int row, int col) {
+		// TODO Auto-generated method stub
+		return col>1;
+	}
+	
+	// 값 수정하고 저장하기
+	@Override
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {	
+	 data.get(rowIndex).set(columnIndex, aValue);
+	}
+	
 
 }
