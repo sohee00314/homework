@@ -9,6 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import com.sinse.shop.admin.commom.view.Page;
+import com.sinse.shop.admin.member.view.JoinPage;
+import com.sinse.shop.admin.member.view.LoginPage;
+
 public class AppMain extends JFrame{
 	JPanel p_north;
 	JLabel la_user;
@@ -19,6 +23,8 @@ public class AppMain extends JFrame{
 	JLabel la_member;
 	JLabel la_cs;
 	JLabel la_setting;
+	
+	Page[]pages; // 페이지들을 받을 배열
 	
 	public AppMain() {
 		p_north = new JPanel();
@@ -66,10 +72,30 @@ public class AppMain extends JFrame{
 		p_west.add(la_setting);
 		add(p_west,BorderLayout.WEST);
 		
+		createPage();
+		showPage();
 		setSize(1300, 800);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
+	
+	// 패이지 생성
+	public void createPage() {
+		pages = new Page[2];
+		pages[0] = new LoginPage(this);
+		pages[1] = new JoinPage(this);
+		
+		for(int i =0; i<pages.length;i++) {
+			p_center.add(pages[i]);
+		}
+		
+	}
+	
+	// 페이지 보기
+	public void showPage() {
+		// 로그인 여부 확인 필요
+	}
+	
 	public static void main(String[] args) {
 		new AppMain();
 	}
