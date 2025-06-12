@@ -1,4 +1,4 @@
-package com.sinse.shop.admin.member.view;
+package com.sinse.shop.admin.security;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

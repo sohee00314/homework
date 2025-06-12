@@ -3,6 +3,9 @@ package com.sinse.shop.admin;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,8 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.sinse.shop.admin.commom.view.Page;
-import com.sinse.shop.admin.member.view.JoinPage;
-import com.sinse.shop.admin.member.view.LoginPage;
+import com.sinse.shop.admin.security.JoinPage;
+import com.sinse.shop.admin.security.LoginPage;
 
 public class AppMain extends JFrame{
 	JPanel p_north;
@@ -71,6 +74,15 @@ public class AppMain extends JFrame{
 		p_west.add(la_cs);
 		p_west.add(la_setting);
 		add(p_west,BorderLayout.WEST);
+		
+		
+		// 이벤트부여
+		la_product.addMouseListener(new MouseAdapter() {
+			// productPage로 이동
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
 		
 		createPage();
 		showPage();
