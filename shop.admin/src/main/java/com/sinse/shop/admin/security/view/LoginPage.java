@@ -1,4 +1,4 @@
-package com.sinse.shop.admin.member.view;
+package com.sinse.shop.admin.security.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.sinse.shop.admin.AppMain;
+import com.sinse.shop.admin.commom.config.Config;
 import com.sinse.shop.admin.commom.view.Page;
 
 public class LoginPage extends Page{
@@ -66,7 +67,7 @@ public class LoginPage extends Page{
 		// 이벤트 부여
 		//JoinPage로 이동
 		bt_join.addActionListener(e->{
-			
+			appMain.showPage(Config.Join_Page);
 		});
 		
 		

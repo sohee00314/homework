@@ -1,4 +1,4 @@
-package com.sinse.shop.admin.member.view;
+package com.sinse.shop.admin.security.view;
 
 import java.awt.Color;
 import java.awt.Dimension;

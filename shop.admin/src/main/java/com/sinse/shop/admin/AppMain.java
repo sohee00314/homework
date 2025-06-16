@@ -3,15 +3,20 @@ package com.sinse.shop.admin;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import com.sinse.shop.admin.commom.config.Config;
 import com.sinse.shop.admin.commom.view.Page;
-import com.sinse.shop.admin.member.view.JoinPage;
-import com.sinse.shop.admin.member.view.LoginPage;
+import com.sinse.shop.admin.product.view.ProductPage;
+import com.sinse.shop.admin.security.model.Admin;
+import com.sinse.shop.admin.security.view.JoinPage;
+import com.sinse.shop.admin.security.view.LoginPage;
 
 public class AppMain extends JFrame{
 	JPanel p_north;
@@ -25,6 +30,7 @@ public class AppMain extends JFrame{
 	JLabel la_setting;
 	
 	Page[]pages; // 페이지들을 받을 배열
+	Admin admin; // 로그인 정보가 들어있는 모델
 	
 	public AppMain() {
 		p_north = new JPanel();
@@ -36,6 +42,8 @@ public class AppMain extends JFrame{
 		la_member = new JLabel("Member");
 		la_cs = new JLabel("CS");
 		la_setting = new JLabel("Setting");
+		
+		admin = new Admin();
 		
 		// 스타일
 		Dimension d = new Dimension(200,40);
@@ -72,8 +80,41 @@ public class AppMain extends JFrame{
 		p_west.add(la_setting);
 		add(p_west,BorderLayout.WEST);
 		
+		// 이벤트 부여하기
+		la_product.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				showPage(Config.Product_Page);
+			}
+		});
+		la_order.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		la_member.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		la_cs.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		la_setting.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		
+		
 		createPage();
-		showPage();
+//		showPage();
 		setSize(1300, 800);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -81,9 +122,10 @@ public class AppMain extends JFrame{
 	
 	// 패이지 생성
 	public void createPage() {
-		pages = new Page[2];
+		pages = new Page[3];
 		pages[0] = new LoginPage(this);
 		pages[1] = new JoinPage(this);
+		pages[2] = new ProductPage(this);
 		
 		for(int i =0; i<pages.length;i++) {
 			p_center.add(pages[i]);
@@ -92,8 +134,9 @@ public class AppMain extends JFrame{
 	}
 	
 	// 페이지 보기
-	public void showPage() {
+	public void showPage(int target) {
 		// 로그인 여부 확인 필요
+		pages[target].setVisible(true);
 	}
 	
 	public static void main(String[] args) {

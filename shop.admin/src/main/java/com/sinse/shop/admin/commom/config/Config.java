@@ -13,4 +13,10 @@ public class Config {
  * ----------------------------------------------------*/
 	public  static final int Login_Page =0;
 	public  static final int Join_Page =1;
+	public  static final int Product_Page =2;
+	public  static final int Order_Page =3;
+	public  static final int Member_Page =4;
+	public  static final int CS_Page =5;
+	public  static final int Setting_Page =6;
+	
 }
