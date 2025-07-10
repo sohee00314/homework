@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="News">
+	<!-- news 테이블 조회 -->
+	<select id="selectAll" resultType="News">
+		select *from news
+	</select>
+	<!-- news 테이블에 있는 데이터 1건 조회 -->
 	<!-- 뉴스 추가하기 -->
 	<insert id="insert" parameterType="News">
 		insert into News(title,writer,content) value(#{title},#{writer},#{content})
 	</insert>
+	<!-- news 테이블에 있는 데이터 1건 수정 -->
+	<!-- news 테이블에 있는 데이터 1건 삭제 -->
 </mapper>

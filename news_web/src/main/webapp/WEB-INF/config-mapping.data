@@ -1,0 +1,4 @@
+#[Controller Mapping]
+
+#[View Mapping]
+/news/list.view=/news/list.jsp

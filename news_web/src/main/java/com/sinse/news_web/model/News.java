@@ -10,7 +10,7 @@ public class News {
 	private String title;//제목
 	private String writer;//글쓴이
 	private String content;//내용
-	private int regdate;//업로드날짜
+	private String regdate;//업로드날짜
 	private int hit;//조회수
 	
 }
