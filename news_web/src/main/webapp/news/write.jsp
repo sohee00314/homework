@@ -58,7 +58,7 @@ input[type=button]:hover {
 		//등록버튼에 이벤트 연결
 		$("#regist").click(()=>{
 			$("form").attr({
-				action : "/news/regist",
+				action : "/news/write.do",
 				method : "POST"
 			});
 		$("form").submit();
@@ -66,7 +66,7 @@ input[type=button]:hover {
 		
 		//목록으로 가는 버튼 이벤튼 연결
 		$("#list").click(()=>{
-			location.href="/news/list.jsp";
+			location.href="/news/list.do";
 		});
 	});
 </script>

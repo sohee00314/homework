@@ -1,5 +1,7 @@
 #[Controller Mapping]
 /news/list.do=com.sinse.news_web.news.controller.ListController
+/news/write.do=com.sinse.news_web.news.controller.WriteController
 
 #[View Mapping]
 /news/list.view=/news/list.jsp
+/news/write.view=/news/list.do

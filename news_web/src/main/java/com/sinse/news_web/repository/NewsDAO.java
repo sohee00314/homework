@@ -51,6 +51,7 @@ public class NewsDAO {
 		int result = sqlSession.insert("News.insert", news);
 		sqlSession.commit();
 		sqlSession.close();
+		logger.debug("글작석 성공 : "+result);
 		if(result<1) {
 			throw new NewsException("글 등록 실패");
 		}
