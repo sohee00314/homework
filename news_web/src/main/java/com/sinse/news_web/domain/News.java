@@ -1,4 +1,4 @@
-package com.sinse.news_web.model;
+package com.sinse.news_web.domain;
 
 import lombok.Data;
 /**

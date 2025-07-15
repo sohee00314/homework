@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -66,11 +67,23 @@ public class DispatcherServlet extends HttpServlet{
 			//하위 컨트롤러 호출
 			Controller controller = (Controller)clazz.newInstance();
 			//하위 컨트롤러에서 받은 값 
+			logger.debug("Controller에 대입할  request : "+request+" reponse : "+response);
 			controller.execue(request, response);
 			//하위 컨트롤러가 반환한 페이지 검색어 받기
 			String viewName = controller.getViewName();
-			
-			
+			//검색어(key)를 이용해서 실제 페이지 변환
+			String viewPage = props.getProperty(viewName);
+			//요청 유지하기
+			if(controller.isForward()) {
+				//요청에서 얻는 자원을 다른 컨트롤러로 전달하는 객체 생성
+				RequestDispatcher dis = request.getRequestDispatcher(viewPage);
+				//포워딩 시작(자원 전달)
+				logger.debug("다시 반환 할 request : "+request+" reponse : "+response);
+				dis.forward(request, response);
+			}else {
+				//요청 끝고 페이지 전환
+				response.sendRedirect(viewPage);
+			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

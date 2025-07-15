@@ -3,9 +3,11 @@ package com.sinse.news_web.repository;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.sinse.news_web.domain.News;
 import com.sinse.news_web.exception.NewsException;
-import com.sinse.news_web.model.News;
 import com.sinse.news_web.mybatis.MybatisConfig;
 /**
  * news테이블의 DAO 
@@ -19,6 +21,8 @@ public class NewsDAO {
 	//mybatis 호출
 	MybatisConfig config = new MybatisConfig();
 	
+	Logger logger = LoggerFactory.getLogger(getClass());
+	
 	/**
 	 * news 테이블 전체 검색
 	 * */
@@ -30,6 +34,7 @@ public class NewsDAO {
 		}
 		sqlSession.commit();
 		sqlSession.close();
+		logger.debug("news 태이블 데이터 모두 조회 성공 :"+list);
 		return list;
 	}
 	/**

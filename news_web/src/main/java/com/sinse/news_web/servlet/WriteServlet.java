@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.sinse.news_web.domain.News;
 import com.sinse.news_web.exception.NewsException;
-import com.sinse.news_web.model.News;
 import com.sinse.news_web.repository.NewsDAO;
 
 public class WriteServlet extends HttpServlet{

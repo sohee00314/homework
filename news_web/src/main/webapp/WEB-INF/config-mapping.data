@@ -1,4 +1,5 @@
 #[Controller Mapping]
+/news/list.do=com.sinse.news_web.news.controller.ListController
 
 #[View Mapping]
 /news/list.view=/news/list.jsp

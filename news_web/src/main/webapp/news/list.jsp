@@ -1,10 +1,9 @@
 <%@page import="java.util.List"%>
 <%@page import="com.sinse.news_web.repository.NewsDAO"%>
-<%@page import="com.sinse.news_web.model.News"%>
+<%@page import="com.sinse.news_web.domain.News"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%
-	NewsDAO newsDAO = new NewsDAO();
-	List<News>newsList = newsDAO.selectAll();
+	List<News> newsList = (List<News>) request.getAttribute("newsList");
 %>
 <!DOCTYPE html>
 <html>
@@ -50,11 +49,13 @@ tr:nth-child(even) {
     <th>업데이트 날짜</th>
     <th>조회수</th>
   </tr>
-  <% for(News news : newsList){
-	  int num = 1;%>
+  <%  
+  int num = 1;
+  for(News news : newsList){
+	%>
   <tr>
     <td><%= num++ %></td>
-    <td><%= news.getTitle() %></td>
+    <td><a href="/notice/detail.do?news_id=<%= news.getNews_id() %>>"><%= news.getTitle() %></a></td>
     <td><%= news.getWriter()%></td>
     <td><%= news.getRegdate() %></td>
     <td><%= news.getHit() %></td>
