@@ -57,6 +57,7 @@ public class DispatcherServlet extends HttpServlet{
 	protected void doRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//클라이언트가 요청한 url 받아오는 객체
 		String url = request.getRequestURI();
+		logger.debug("얻은 url = "+url);
 		//url(key)에 맞는 value(값)호출
 		String className = props.getProperty(url);
 		logger.debug("호출하고 있는 className은 "+className);

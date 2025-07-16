@@ -55,7 +55,7 @@ tr:nth-child(even) {
 	%>
   <tr>
     <td><%= num++ %></td>
-    <td><a href="/notice/detail.do?news_id=<%= news.getNews_id() %>>"><%= news.getTitle() %></a></td>
+    <td><a href="/news/detail.do?news_id=<%= news.getNews_id() %>"><%= news.getTitle() %></a></td>
     <td><%= news.getWriter()%></td>
     <td><%= news.getRegdate() %></td>
     <td><%= news.getHit() %></td>

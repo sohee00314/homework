@@ -40,8 +40,16 @@ public class NewsDAO {
 	/**
 	 * news 테이블에 있는 데이터 1건 호출
 	 * */
-	public News select() {
-		return null;
+	public News select(int news_id) throws NewsException{
+		SqlSession sqlSession = config.getSqlSession();
+		News news = sqlSession.selectOne("News.select",news_id);
+		if(news == null) {
+			throw new NewsException("글 한건 자져오기 실패");
+		}
+		sqlSession.commit();
+		sqlSession.close();
+		logger.debug("글 한건 조회 성공");
+		return news;
 	}
 	/**
 	 * news 테이블에 데이터 1건 추가
