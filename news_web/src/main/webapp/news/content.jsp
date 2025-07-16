@@ -70,10 +70,10 @@ input[type=button]:hover {
 		//삭제 기능 추가
 		$("#delete").click(()=>{
 			$("form").attr({
-				action : "",
-				method : "POST"
+				action : "/news/delete.do",
+				method : "GET"
 			});
-		$("form").submit();
+			$("form").submit();
 		});
 		
 		//목록으로 가는 버튼 이벤튼 연결

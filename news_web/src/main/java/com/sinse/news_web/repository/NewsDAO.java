@@ -80,8 +80,15 @@ public class NewsDAO {
 	/**
 	 * news 테이블에 데이터 1건 삭제
 	 * */
-	public void delete() {
-		
+	public void delete(int news_id) throws NewsException{
+		SqlSession sqlSession = config.getSqlSession();
+		int result=sqlSession.delete("News.delete", news_id);
+		if(result<1) {
+			throw new NewsException("글 삭제 실패");
+		}
+		sqlSession.commit();
+		sqlSession.close();
+		logger.debug("글 삭제 성공 : "+result);
 	}
 	
 }

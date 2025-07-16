@@ -18,4 +18,7 @@
 		update news set title=#{title},writer=#{writer},content=#{content} where news_id=#{news_id}
 	</update>
 	<!-- news 테이블에 있는 데이터 1건 삭제 -->
+	<delete id="delete" parameterType="int">
+		delete from news where news_id=#{news_id}
+	</delete>
 </mapper>
