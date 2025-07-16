@@ -61,7 +61,7 @@ input[type=button]:hover {
 		//등록버튼에 수정기능 추가
 		$("#update").click(()=>{
 			$("form").attr({
-				action : "",
+				action : "/news/update.do",
 				method : "POST"
 			});
 		$("form").submit();
@@ -89,6 +89,7 @@ input[type=button]:hover {
 
 <div class="container">
   <form>
+  	<input type="hidden" name="news_id" value="<%= news.getNews_id() %>">
     <label for="fname">Title</label>
     <input type="text" name="title" value="<%= news.getTitle() %>">
 

@@ -2,8 +2,10 @@
 /news/list.do=com.sinse.news_web.news.controller.ListController
 /news/write.do=com.sinse.news_web.news.controller.WriteController
 /news/detail.do=com.sinse.news_web.news.controller.DetailController
+/news/update.do=com.sinse.news_web.news.controller.UpdateController
 
 #[View Mapping]
 /news/list.view=/news/list.jsp
 /news/write.view=/news/list.do
 /news/detail.view=/news/content.jsp
+/news/update.view=/news/detail.do

@@ -59,7 +59,7 @@ public class NewsDAO {
 		int result = sqlSession.insert("News.insert", news);
 		sqlSession.commit();
 		sqlSession.close();
-		logger.debug("글작석 성공 : "+result);
+		logger.debug("글작성 성공 : "+result);
 		if(result<1) {
 			throw new NewsException("글 등록 실패");
 		}
@@ -67,8 +67,15 @@ public class NewsDAO {
 	/**
 	 * news 테이블에 데이터 1건 수정
 	 * */
-	public void update() {
-		
+	public void update(News news) throws NewsException{
+		SqlSession sqlSession = config.getSqlSession();
+		int result=sqlSession.update("News.update",news);
+		if(result<1) {
+			throw new NewsException("글 수정 실패");
+		}
+		sqlSession.commit();
+		sqlSession.close();
+		logger.debug("글 수정 성공 : "+result);
 	}
 	/**
 	 * news 테이블에 데이터 1건 삭제

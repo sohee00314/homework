@@ -14,5 +14,8 @@
 		insert into News(title,writer,content) value(#{title},#{writer},#{content})
 	</insert>
 	<!-- news 테이블에 있는 데이터 1건 수정 -->
+	<update id="update" parameterType="News">
+		update news set title=#{title},writer=#{writer},content=#{content} where news_id=#{news_id}
+	</update>
 	<!-- news 테이블에 있는 데이터 1건 삭제 -->
 </mapper>
